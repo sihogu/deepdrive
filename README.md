@@ -1,3 +1,6 @@
+# git clone
+    git clone https://github.com/sihogu/deepdrive
+
 # Installation
     pip install -r requirements.txt
 
