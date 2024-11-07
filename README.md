@@ -4,7 +4,8 @@
 
 ## 실행 예시
 # 1.merge 없이 학습 (merge를 한번이라도 하면 merge없이 불가능)
-'''python -m train'''
+'''python
+python -m train
 
 # 2.merge 후 학습
 'python -m merge'
