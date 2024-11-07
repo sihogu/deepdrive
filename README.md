@@ -23,12 +23,12 @@ or
 
 
 - 여러 디바이스 사용:
-'''bash
-    python -m train --device 0,1,2
+
+                python -m train --device 0,1,2
 
 - CPU 사용:
-'''bash
-    python -m train --device cpu
+  
+                    python -m train --device cpu
 
 ## 학습 프로세스 워커 개수 설정 (기본값: 8)
 
