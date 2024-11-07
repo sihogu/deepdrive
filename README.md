@@ -16,7 +16,7 @@ or
 python -m train --use_merge
 
 # 3.train 옵션 설정
-# 학습 device id (default = 0)
+학습 device id (default = 0)
 
 여러개의 디바이스:
 python -m train --device 0,1,2
@@ -24,5 +24,5 @@ python -m train --device 0,1,2
 CPU:
 python -m train --device cpu
 
-# 학습 process workers 개수 (default = 8)
+학습 process workers 개수 (default = 8)
 python -m train --workers 8
