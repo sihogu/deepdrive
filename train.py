@@ -89,19 +89,9 @@ def main():
         patience=50,
         batch=15,
         workers=workers,
-        lrf=0.0001,
-        warmup_epochs=5,
-        cos_lr=True,
         device=device,
         multi_scale=True,
-        label_smoothing=0.1,
-        mosaic=0.8,
-        mixup=0.1,
-        copy_paste=0.2,
-        translate=0.2,
-        flipud=0.1,
-        perspective=0.0005,
-        dropout=0.1,
+        auto_augment='autoaugment'
     )
 
 if __name__ == "__main__":
