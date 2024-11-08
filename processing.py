@@ -4,16 +4,21 @@ import json
 
 #next.yaml의 path 수정
 def update_yaml_path(current_dir, dir_name):
-    yaml_file = os.path.join(current_dir,dir_name,'nextchip.yaml')
+    yaml_file = os.path.join(current_dir, dir_name,'nextchip.yaml')
 
-    with open (yaml_file, 'r',encoding='utf-8') as file:
-        yaml_data = yaml.safe_load(file)
-    yaml_data['path'] = dir_name
+    try:
+        with open (yaml_file, 'r',encoding='utf-8') as file:
+            yaml_data = yaml.safe_load(file)
+        yaml_data['path'] = dir_name
 
-    with open(yaml_file, 'w') as file:
-        yaml.dump(yaml_data, file, default_flow_style=False)
-    
-    print(f"Updated path to {dir_name} in {yaml_file}")
+        with open(yaml_file, 'w',encoding='utf-8') as file:
+            yaml.dump(yaml_data, file, default_flow_style=False)
+        
+        print(f"Updated path to {dir_name} in {yaml_file}")
+    except FileNotFoundError:
+        print(f"File not found: {yaml_file}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 #욜로 데이터셋 지정경로를 강제로 현재 경로로
 def update_datasets_dir():   
