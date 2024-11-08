@@ -90,7 +90,6 @@ def main():
         batch=15,
         workers=workers,
         device=device,
-        multi_scale=True,
         auto_augment='autoaugment'
     )
 
