@@ -6,11 +6,25 @@ from ultralytics import YOLO
 import torch
 import sys
 import json
+import yaml
 
 torch.cuda.empty_cache()
 
+#next.yaml의 path 수정
+def update_yaml_path(current_dir,dir_name):
+    yaml_file = os.path.join(current_dir,dir_name,'nextchip.yaml')
+
+    with open (yaml_file, 'r',encoding='utf-8') as file:
+        yaml_data = yaml.safe_load(file)
+    yaml_data['path'] = 'datasets/nextchip'
+
+    with open(yaml_file, 'w') as file:
+        yaml.dump(yaml_data, file, default_flow_style=False)
+    
+    print(f"Updated path to {current_dir, dir_name} in {yaml_file}")
+
 #욜로 데이터셋 지정경로를 강제로 현재 경로로
-def update_datasets_dir():
+def update_datasets_dir():   
     settings_path = os.path.join(os.getenv('APPDATA'), 'Ultralytics', 'settings.json')
     current_dir = os.path.abspath(os.path.dirname(__file__))
     
@@ -60,6 +74,7 @@ def parse_args():
     return parser.parse_args()
 
 def main():
+    current_dir = os.path.abspath(os.path.dirname(__file__))
     update_datasets_dir()
 
     args = parse_args()
@@ -72,15 +87,17 @@ def main():
     device = args.device
     workers = args.workers
     
+    update_yaml_path(current_dir,dir_name)
+
     if args.use_merge:
         print("Merging test set into train set...")
         import merge
         sys.argv = [sys.argv[0], '--dir_name', dir_name]
         merge.main()
     
-    model = YOLO('./config/deepdrive.yaml')
+    model = YOLO(os.path.join(current_dir,'config','deepdrive.yaml'))
 
-    current_dir = os.path.abspath(os.path.dirname(__file__))
+    
     data_path = os.path.join(current_dir, dir_name, 'nextchip.yaml')
 
     results_train = model.train(
