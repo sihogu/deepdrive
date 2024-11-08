@@ -5,7 +5,7 @@
     pip install -r requirements.txt
 
 ### 주의 사항
-- `requirements.txt`에는 CUDA 버전이 명시되지 않습니다. 이유는 일반적인 설치 명령으로는 특정 CUDA 버전을 지정할 수 없기 때문입니다.
+- `requirements.txt`에는 torch, torchvision, CUDA 버전이 명시되지 않습니다. 이유는 일반적인 설치 명령으로는 특정 CUDA 버전을 지정할 수 없기 때문입니다.
 
 # 학습 방법
 ## 1.merge 없이 학습 
