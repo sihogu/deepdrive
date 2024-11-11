@@ -39,6 +39,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train YOLO model with optional dataset merge.")
     parser.add_argument('--dir_name', type=str, default='datasets/nextchip', help="Dataset directory name")
     parser.add_argument('--workers', type=int, default=8, help="Dataset directory name")
+    parser.add_argument('--batch', type=int, default=16, help="Dataset directory name")
     parser.add_argument('--device', type=str, default=get_available_devices(), help="Device id or list of device ids (e.g. 0 or 0,1)")
     parser.add_argument('--use_merge', action='store_true', help="Merge test into train before training")
     return parser.parse_args()
@@ -65,12 +66,14 @@ def main():
     data_path = os.path.join(current_dir, dir_name, 'nextchip.yaml')
     device = args.device
     workers = args.workers
+    batch = args.batch
+    
 
     results_train = model.train(
         data=data_path,
         epochs=500,
         patience=50,
-        batch=15,
+        batch=batch,
         workers=workers,
         device=device,
         auto_augment='autoaugment'
