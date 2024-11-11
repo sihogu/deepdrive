@@ -40,3 +40,10 @@ or
 
 ```bash
 python -m train --workers 8
+```
+
+## 학습 GPU batch 조절 (기본값: 16)
+
+```bash
+python -m train --batch 16
+```
