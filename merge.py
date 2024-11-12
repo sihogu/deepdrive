@@ -56,8 +56,6 @@ def main():
     else:
         base_dir = args.dir_name
     
-    
-
     source_img_dir = os.path.join(base_dir, 'images', 'test')
     destination_img_dir = os.path.join(base_dir, 'images', 'train')
 

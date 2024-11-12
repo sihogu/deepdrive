@@ -1,6 +1,19 @@
 import yaml
 import os
 import json
+import tarfile
+
+#압축해제
+def extract_tgz(tgz_path, extract_to):
+    if os.path.exists(extract_to) and os.listdir(extract_to):
+        print(f"Directory '{extract_to}' already contains files. Extraction skipped.")
+        return
+        
+    with tarfile.open(tgz_path, 'r:gz') as tar:
+        print('Extracting...')
+        tar.extractall(path='datasets')
+    print(f"Extracted {tgz_path} to datasets")
+
 
 #next.yaml의 path 수정
 def update_yaml_path(current_dir, dir_name):
@@ -38,8 +51,11 @@ def update_datasets_dir():
 
 def main(dir_name=os.path.join('datasets','nextchip_shared')):
     current_dir = os.path.abspath(os.path.dirname(__file__))
+
     update_datasets_dir()
     update_yaml_path(current_dir, dir_name)
+    extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
+    extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
     
 
 if __name__ == "__main__":
