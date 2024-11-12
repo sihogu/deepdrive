@@ -2,6 +2,7 @@ import yaml
 import os
 import json
 import tarfile
+import time
 
 #압축해제
 def extract_tgz(tgz_path, extract_to):
@@ -56,7 +57,8 @@ def main(dir_name=os.path.join('datasets','nextchip_shared')):
     update_yaml_path(current_dir, dir_name)
     extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
     extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
-    
+
+    time.sleep(2)
 
 if __name__ == "__main__":
     main()
