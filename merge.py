@@ -3,6 +3,16 @@
 import os
 import shutil
 import argparse
+import zipfile
+
+def extract_zip(zip_path, extract_to):
+    if os.path.exists(extract_to) and os.listdir(extract_to):
+        print(f"Directory '{extract_to}' already contains files. Extraction skipped.")
+        return
+        
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+    print(f"Extracted files to {extract_to}")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Merge test images and labels into train set.")
@@ -25,6 +35,21 @@ def move_files(source_dir, destination_dir, all_files, extension, start_num):
         else:
             print(f"{extension} file {file} does not exist.")
 
+# def copy_files(source_dir, destination_dir, all_files, extension, start_num):
+#     if not all_files:
+#         print(f'{extension} file does not exist. Path checked: {source_dir}')
+
+#     for i, file in enumerate(all_files):
+#         new_name = f"{i + start_num}.{extension}"
+#         old_path = os.path.join(source_dir, file)
+#         new_path = os.path.join(destination_dir, new_name)
+
+#         if os.path.exists(old_path):
+#             shutil.copy2(old_path, new_path)
+#             print(f"Copied {extension} file: {file} -> {new_name}")
+#         else:
+#             print(f"{extension} file {file} does not exist.")
+
 def replace_txt_file(destination_img_dir, txt_file_path):
     start_img_num = len(os.listdir(destination_img_dir))
     len_size=sorted(list(map(str,list(range(start_img_num)))))
@@ -39,6 +64,8 @@ def main():
         base_dir = os.path.join('datasets',args.dir_name)
     else:
         base_dir = args.dir_name
+    
+    extract_zip(os.path.join('datasets','merge_source.zip'), extract_to='datasets')
 
     source_img_dir = os.path.join(base_dir, 'images', 'test')
     destination_img_dir = os.path.join(base_dir, 'images', 'train')
@@ -52,7 +79,7 @@ def main():
 
     start_img_num = len(os.listdir(destination_img_dir))
     start_label_num = len(os.listdir(destination_label_dir))
-
+    
     move_files(source_img_dir, destination_img_dir, all_imgs, 'jpg', start_img_num)
     move_files(source_label_dir, destination_label_dir, all_labels, 'txt', start_label_num)
     replace_txt_file(destination_img_dir, txt_file_path)
