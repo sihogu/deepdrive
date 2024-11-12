@@ -36,7 +36,7 @@ def update_datasets_dir():
     else:
         print("Ultralytics settings.json file not found.")
 
-def main(dir_name='datasets/nextchip'):
+def main(dir_name='datasets/nextchip_shared'):
     current_dir = os.path.abspath(os.path.dirname(__file__))
     update_datasets_dir()
     update_yaml_path(current_dir, dir_name)

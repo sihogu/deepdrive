@@ -6,7 +6,7 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Merge test images and labels into train set.")
-    parser.add_argument('--dir_name', type=str, default='datasets/nextchip', help="Base directory for dataset")
+    parser.add_argument('--dir_name', type=str, default='datasets/nextchip_shared', help="Base directory for dataset")
     return parser.parse_args()
 
 def move_files(source_dir, destination_dir, all_files, extension, start_num):
@@ -43,7 +43,7 @@ def main():
     source_img_dir = os.path.join(base_dir, 'images', 'test')
     destination_img_dir = os.path.join(base_dir, 'images', 'train')
 
-    source_label_dir = os.path.join(base_dir, 'labels', 'test')
+    source_label_dir = os.path.join('datasets','merge_source', 'test')
     destination_label_dir = os.path.join(base_dir, 'labels', 'train')
 
     txt_file_path = os.path.join(base_dir, 'train.txt')
