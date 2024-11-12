@@ -3,20 +3,21 @@
 import os
 import shutil
 import argparse
-import zipfile
+import tarfile
 
-def extract_zip(zip_path, extract_to):
+def extract_tgz(tgz_path, extract_to):
     if os.path.exists(extract_to) and os.listdir(extract_to):
         print(f"Directory '{extract_to}' already contains files. Extraction skipped.")
         return
         
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_to)
-    print(f"Extracted files to {extract_to}")
+    with tarfile.open(tgz_path, 'r:gz') as tar:
+        print('Extracting...')
+        tar.extractall(path='datasets')
+    print(f"Extracted {tgz_path} to datasets")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Merge test images and labels into train set.")
-    parser.add_argument('--dir_name', type=str, default='datasets/nextchip_shared', help="Base directory for dataset")
+    parser.add_argument('--dir_name', type=str, default=os.path.join('datasets','nextchip_shared'), help="Base directory for dataset")
     return parser.parse_args()
 
 def move_files(source_dir, destination_dir, all_files, extension, start_num):
@@ -65,7 +66,8 @@ def main():
     else:
         base_dir = args.dir_name
     
-    extract_zip(os.path.join('datasets','merge_source.zip'), extract_to='datasets')
+    extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
+    extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
 
     source_img_dir = os.path.join(base_dir, 'images', 'test')
     destination_img_dir = os.path.join(base_dir, 'images', 'train')
