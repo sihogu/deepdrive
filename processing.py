@@ -28,7 +28,7 @@ def update_datasets_dir():
     if os.path.exists(settings_path):
         with open(settings_path, 'r+') as f:
             settings = json.load(f)
-            settings['datasets_dir'] = current_dir
+            settings['datasets_dir'] = os.path.join(current_dir, 'datasets')
             f.seek(0)
             json.dump(settings, f, indent=4)
             f.truncate()
