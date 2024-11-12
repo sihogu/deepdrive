@@ -3,17 +3,7 @@
 import os
 import shutil
 import argparse
-import tarfile
 
-def extract_tgz(tgz_path, extract_to):
-    if os.path.exists(extract_to) and os.listdir(extract_to):
-        print(f"Directory '{extract_to}' already contains files. Extraction skipped.")
-        return
-        
-    with tarfile.open(tgz_path, 'r:gz') as tar:
-        print('Extracting...')
-        tar.extractall(path='datasets')
-    print(f"Extracted {tgz_path} to datasets")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Merge test images and labels into train set.")
@@ -66,8 +56,7 @@ def main():
     else:
         base_dir = args.dir_name
     
-    extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
-    extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
+    
 
     source_img_dir = os.path.join(base_dir, 'images', 'test')
     destination_img_dir = os.path.join(base_dir, 'images', 'train')

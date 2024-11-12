@@ -5,9 +5,19 @@ import argparse
 from ultralytics import YOLO
 import torch
 import sys
+import tarfile
 
 torch.cuda.empty_cache()
 
+def extract_tgz(tgz_path, extract_to):
+    if os.path.exists(extract_to) and os.listdir(extract_to):
+        print(f"Directory '{extract_to}' already contains files. Extraction skipped.")
+        return
+        
+    with tarfile.open(tgz_path, 'r:gz') as tar:
+        print('Extracting...')
+        tar.extractall(path='datasets')
+    print(f"Extracted {tgz_path} to datasets")
 
 def parse_device(value):
     if value.lower() == 'cpu':
@@ -47,6 +57,9 @@ def parse_args():
 def main():
     current_dir = os.path.abspath(os.path.dirname(__file__))
     args = parse_args()
+
+    extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
+    extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
 
     if 'datasets' not in args.dir_name:
         dir_name = os.path.join('datasets',args.dir_name)
