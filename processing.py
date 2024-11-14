@@ -36,7 +36,11 @@ def update_yaml_path(current_dir, dir_name):
 
 #욜로 데이터셋 지정경로를 강제로 현재 경로로
 def update_datasets_dir():   
-    settings_path = os.path.join(os.getenv('APPDATA'), 'Ultralytics', 'settings.json')
+    if os.name == 'posix':
+        settings_path = os.path.join(os.path.expanduser('~'), '.config/Ultralytics/settings.json')
+    elif os.name == 'nt':
+        settings_path = os.path.join(os.getenv('APPDATA'), 'Ultralytics', 'settings.json')
+        
     current_dir = os.path.abspath(os.path.dirname(__file__))
     
     if os.path.exists(settings_path):
