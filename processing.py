@@ -54,15 +54,14 @@ def update_datasets_dir():
     else:
         print("Ultralytics settings.json file not found.")
 
-def main(dir_name=os.path.join('datasets','nextchip_shared')):
+def main(dir_name=os.path.join('datasets', 'nextchip_shared')):
     current_dir = os.path.abspath(os.path.dirname(__file__))
 
     update_datasets_dir()
+    
+    extract_tgz(os.path.join('datasets', 'merge_source.tgz'), extract_to=os.path.join('datasets', 'merge_source'))
+    extract_tgz(os.path.join('datasets', 'nextchip.tgz'), extract_to=os.path.join('datasets', 'nextchip_shared'))
     update_yaml_path(current_dir, dir_name)
-    extract_tgz(os.path.join('datasets','merge_source.tgz'), extract_to=os.path.join('datasets','merge_source'))
-    extract_tgz(os.path.join('datasets','nextchip.tgz'), extract_to=os.path.join('datasets','nextchip_shared'))
-
-    time.sleep(2)
 
 if __name__ == "__main__":
     main()
