@@ -40,7 +40,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train YOLO model with optional dataset merge.")
     parser.add_argument('--dir_name', type=str, default=os.path.join('datasets','nextchip_shared'), help="Dataset directory name")
     parser.add_argument('--workers', type=int, default=8, help="Dataset directory name")
-    parser.add_argument('--batch', type=int, default=16, help="Dataset directory name")
+    parser.add_argument('--batch', type=int, default=6, help="Dataset directory name")
     parser.add_argument('--device', type=str, default=get_available_devices(), help="Device id or list of device ids (e.g. 0 or 0,1)")
     parser.add_argument('--use_merge', action='store_true', help="Merge test into train before training")
     return parser.parse_args()
